@@ -4,9 +4,8 @@
 Created on Thursday June 18 17:38:40 2020
 @author: Krishna
 
-Implementation of the health news tweet clustering using the
-Jaccard Distance metric and K-means clustering algorithm to
-cluster redundant/repeated tweets into the same cluster.
+This script will combine all the */txt files into a
+single file for data analysis
 
 """
 
