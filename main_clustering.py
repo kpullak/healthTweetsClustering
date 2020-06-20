@@ -12,11 +12,12 @@ tweet_cluster mapping csv file as output
 """
 
 
-import random as rd
 import math
+import random as rd
 import pandas as pd
 
 import matplotlib.pyplot as plt
+from kneed import KneeLocator
 
 
 def k_means(tweets, k = 4, max_iterations=50):
@@ -183,7 +184,7 @@ if __name__ == '__main__':
     tweets = open('combined_processed_tweets.txt', "r", encoding="ISO-8859-1")
     tweets = list(tweets)
 
-    experiments = 1  # default number of experiments to be performed
+    experiments = 3  # default number of experiments to be performed
     k = 7  # default value of K for K-means
     SSE = []  # list to hold the SSE for different cluster combinations
 
@@ -235,6 +236,7 @@ if __name__ == '__main__':
 
 cluster_number = []
 for alpha in range(experiments):
+    # the number 7 signifies the number of clusters we started with
     cluster_number.append(7 + alpha)
 
 fig = plt.figure()
@@ -244,15 +246,14 @@ plt.ylabel('Sum of Squared Error')
 fig.savefig('foo.png')
 
 # based on the SSE values computed above, finding the best cluster_number based on elbow plots
-from kneed import KneeLocator
 kn = KneeLocator(cluster_number, SSE, curve='convex', direction='decreasing')
 print(kn.knee)
-# result: the best cluster count is found to be = 7
+# result: the best cluster count is found to be = 7 (based on the above kneelocator plot)
 
 fig = plt.figure()
 plt.xlabel('number of clusters k')
 plt.ylabel('Sum of squared distances')
 plt.plot(cluster_number, SSE, 'bx-')
 plt.vlines(kn.knee, plt.ylim()[0], plt.ylim()[1], linestyles='dashed')
-# plt.show()
+plt.show()
 fig.savefig('plt.png')
